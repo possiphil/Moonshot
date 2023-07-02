@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showingGrid = true
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            Group {
+                if showingGrid {
+                    GridView()
+                } else {
+                    ListView()
+                }
+            }
+            .toolbar {
+                Button {
+                    showingGrid.toggle()
+                } label: {
+                    Image(systemName: "eye.fill")
+                }
+            }
         }
-        .padding()
     }
 }
 

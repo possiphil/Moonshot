@@ -8,13 +8,38 @@
 import SwiftUI
 
 struct MissionCrewScrollView: View {
+    let crew: [MissionView.CrewMember]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct MissionCrewScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        MissionCrewScrollView()
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(crew, id: \.role) { crewMember in
+                    NavigationLink {
+                        AstronautView(astronaut: crewMember.astronaut)
+                    } label: {
+                        HStack {
+                            Image(crewMember.astronaut.id)
+                                .resizable()
+                                .frame(width: 104, height: 72)
+                                .clipShape(Capsule())
+                                .overlay {
+                                    Capsule()
+                                        .strokeBorder(.white, lineWidth: 1)
+                                }
+                            
+                            VStack(alignment: .leading) {
+                                Text(crewMember.astronaut.name)
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                                
+                                Text(crewMember.role)
+                                    .foregroundColor(crewMember.role == "Commander" ? .primary : .secondary)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                }
+            }
+        }
     }
 }
